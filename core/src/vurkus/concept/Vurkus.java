@@ -48,7 +48,9 @@ public class Vurkus extends ApplicationAdapter {
 			shapeRenderer = new ShapeRenderer();
 
 			//no hot plug/unplug logic
-			controller = Controllers.getControllers().get(0);
+			if (Controllers.getControllers().size > 0) {
+				controller = Controllers.getControllers().get(0);
+			}
 
 			camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -244,6 +246,11 @@ public class Vurkus extends ApplicationAdapter {
 
 	//tested only on Dualshock 4!!!
 	public static void handleControllerInput(Controller controller, InputState inputState) {
+		if (controller == null) {
+			//no controller attached
+			return;
+		}
+
 		float leftJoypadX = limit(controller.getAxis(3));
 		float leftJoypadY = -limit(controller.getAxis(2)); //flip Y-axis value
 //		float rightJoypadX = limit(controller.getAxis(1));
